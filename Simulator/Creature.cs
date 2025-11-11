@@ -66,4 +66,25 @@ public class Creature
     {
         Console.WriteLine($"Hi! I'm {Name} (level {Level}).");
     }
+
+    public void Go(Direction direction)
+    {
+        Console.WriteLine($"{Name} goes {direction.ToString().ToLower()}.");
+    }
+
+    
+    public void Go(Direction[] directions)
+    {
+        foreach (var dir in directions)
+        {
+            Go(dir);
+        }
+    }
+
+    
+    public void Go(string input)
+    {
+        Direction[] parsed = DirectionParser.Parse(input);
+        Go(parsed);
+    }
 }
