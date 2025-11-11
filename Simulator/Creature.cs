@@ -1,6 +1,6 @@
 ﻿namespace Simulator;
 
-public class Creature
+public abstract class Creature
 {
     private string _name = "Unknown";
     private int _level = 1;
@@ -62,8 +62,27 @@ public class Creature
 
     public string Info => $"{Name} <{Level}>";
 
-    public void SayHi()
+    public abstract void SayHi(); //    metoda abstrakcyjna - musi być zaimplementowana w klasach dziedziczących
+
+
+    public void Go(Direction direction)
     {
-        Console.WriteLine($"Hi! I'm {Name} (level {Level}).");
+        Console.WriteLine($"{Name} goes {direction.ToString().ToLower()}.");
+    }
+
+    
+    public void Go(Direction[] directions)
+    {
+        foreach (var dir in directions)
+        {
+            Go(dir);
+        }
+    }
+
+    
+    public void Go(string input)
+    {
+        Direction[] parsed = DirectionParser.Parse(input);
+        Go(parsed);
     }
 }

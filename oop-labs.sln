@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArraysAndStrings", "ArraysA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{3B4A3EBA-4443-416D-BF39-FDA5657F916F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boxing", "Boxing\Boxing.csproj", "{E91C16D4-AB3D-4B5F-82C2-8AE280EAD3EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3B4A3EBA-4443-416D-BF39-FDA5657F916F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B4A3EBA-4443-416D-BF39-FDA5657F916F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B4A3EBA-4443-416D-BF39-FDA5657F916F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E91C16D4-AB3D-4B5F-82C2-8AE280EAD3EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E91C16D4-AB3D-4B5F-82C2-8AE280EAD3EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E91C16D4-AB3D-4B5F-82C2-8AE280EAD3EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E91C16D4-AB3D-4B5F-82C2-8AE280EAD3EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
