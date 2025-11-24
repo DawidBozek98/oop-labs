@@ -1,43 +1,24 @@
-﻿namespace Simulator;
+﻿using Simulator;
 
 public class Elf : Creature
 {
-    private int _agility;
-    private int _singCount = 0;
+    public int Agility { get; set; } = 1;
+    public void Sing() => Console.WriteLine($"{Name} is singing.");
 
-    public int Agility
-    {
-        get => _agility;
-        init
-        {
-            int v = value;
-            if (v < 0) v = 0;
-            if (v > 10) v = 10;
-            _agility = v;
-        }
-    }
-
-    public Elf() { }
-
-    public Elf(string name, int level = 1, int agility = 0)
-        : base(name, level)
+    public Elf(string name, int level = 1, int agility = 1) : base(name, level) //najpier wywoła się konstruktor bazowy
     {
         Agility = agility;
     }
 
+    public Elf() { }
     public override void SayHi()
     {
-        Console.WriteLine($"{Name} the Elf (Lvl {Level}, Agility {Agility})");
+        Console.WriteLine($"Hi! I'm {Name} (level {Level}, agility {Agility}.");
     }
 
-    public void Sing()
+    public override string ToString()
     {
-        _singCount++;
-        Console.WriteLine($"{Name} sings...");
-
-        if (_singCount % 3 == 0 && _agility < 10)
-            _agility++;
+        return($"{Name} <Level: {Level}, Agility: {Agility}>");
     }
 
-    public override int Power => 8 * Level + 2 * Agility;
 }

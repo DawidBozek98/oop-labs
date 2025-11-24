@@ -19,10 +19,13 @@ public abstract class Creature
                 value = value.PadRight(3, '#');
 
             if (value.Length > 25)
-                value = value[..25].TrimEnd();
+                value = value.Substring(0, 25).TrimEnd();
+
+            if (value.Length < 3)
+                value = value.PadRight(3, '#');
 
             if (char.IsLower(value[0]))
-                value = char.ToUpper(value[0]) + value[1..];
+                value = char.ToUpper(value[0]) + value.Substring(1);
 
             _name = value;
         }
@@ -33,13 +36,12 @@ public abstract class Creature
         get => _level;
         init
         {
-            if (value < 1) _level = 1;
-            else if (value > 10) _level = 10;
-            else _level = value;
+            int v = value;
+            if (v < 1) v = 1;
+            if (v > 10) v = 10;
+            _level = v;
         }
     }
-
-    public Creature() { }
 
     public Creature(string name, int level = 1)
     {
@@ -47,28 +49,58 @@ public abstract class Creature
         Level = level;
     }
 
+    public Creature()
+    {
+    }
+
     public void Upgrade()
     {
-        if (_level < 10)
-            _level++;
+        if (_level >= 10)
+            return; 
+        _level++;
     }
 
     public string Info => $"{Name} <{Level}>";
 
-    public abstract void SayHi();
+    public abstract void SayHi(); //    metoda abstrakcyjna - musi być zaimplementowana w klasach dziedziczących
 
-    public abstract int Power { get; }
 
     public void Go(Direction direction)
     {
         Console.WriteLine($"{Name} goes {direction.ToString().ToLower()}.");
     }
 
+    
     public void Go(Direction[] directions)
     {
-        foreach (var dir in directions) Go(dir);
+        foreach (var dir in directions)
+        {
+            Go(dir);
+        }
     }
 
+    
+    public void Go(string input)
+    {
+        Direction[] parsed = DirectionParser.Parse(input);
+        Go(parsed);
+    }
+
+    public void Go(Direction direction)
+    {
+        Console.WriteLine($"{Name} goes {direction.ToString().ToLower()}.");
+    }
+
+    
+    public void Go(Direction[] directions)
+    {
+        foreach (var dir in directions)
+        {
+            Go(dir);
+        }
+    }
+
+    
     public void Go(string input)
     {
         Direction[] parsed = DirectionParser.Parse(input);
