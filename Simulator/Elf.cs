@@ -10,10 +10,7 @@ public class Elf : Creature
         get => _agility;
         init
         {
-            int v = value;
-            if (v < 0) v = 0;
-            if (v > 10) v = 10;
-            _agility = v;
+            _agility = Validator.Limiter(value, 0, 10);
         }
     }
 

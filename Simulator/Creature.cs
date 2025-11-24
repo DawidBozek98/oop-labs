@@ -10,21 +10,7 @@ public abstract class Creature
         get => _name;
         init
         {
-            if (value == null)
-                value = "Unknown";
-
-            value = value.Trim();
-
-            if (value.Length < 3)
-                value = value.PadRight(3, '#');
-
-            if (value.Length > 25)
-                value = value[..25].TrimEnd();
-
-            if (char.IsLower(value[0]))
-                value = char.ToUpper(value[0]) + value[1..];
-
-            _name = value;
+            _name = Validator.Shortener(value, 3, 25, '#');
         }
     }
 
@@ -33,9 +19,7 @@ public abstract class Creature
         get => _level;
         init
         {
-            if (value < 1) _level = 1;
-            else if (value > 10) _level = 10;
-            else _level = value;
+            _level = Validator.Limiter(value, 1, 10);
         }
     }
 
@@ -55,10 +39,7 @@ public abstract class Creature
 
     public string Info => $"{Name} <{Level}>";
 
-    // metoda abstrakcyjna
     public abstract void SayHi();
-
-    // właściwość abst
     public abstract int Power { get; }
 
     public void Go(Direction direction)

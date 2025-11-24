@@ -10,10 +10,7 @@ public class Orc : Creature
         get => _rage;
         init
         {
-            int v = value;
-            if (v < 0) v = 0;
-            if (v > 10) v = 10;
-            _rage = v;
+            _rage = Validator.Limiter(value, 0, 10);
         }
     }
 
