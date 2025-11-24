@@ -1,20 +1,43 @@
-﻿using Simulator;
-using System.Xml.Linq;
+﻿namespace Simulator;
 
 public class Orc : Creature
 {
-    public int Rage { get; set; } = 1;
-    public void Hunt() => Console.WriteLine($"{Name} is hunting.");
+    private int _rage;
+    private int _huntCount = 0;
 
-    public Orc(string name, int level, int rage) : base(name, level)
+    public int Rage
+    {
+        get => _rage;
+        init
+        {
+            int v = value;
+            if (v < 0) v = 0;
+            if (v > 10) v = 10;
+            _rage = v;
+        }
+    }
+
+    public Orc() { }
+
+    public Orc(string name, int level = 1, int rage = 0)
+        : base(name, level)
     {
         Rage = rage;
     }
 
-
-
     public override void SayHi()
     {
-        Console.WriteLine($"Hi! I'm {Name} (level {Level}, rage {Rage}.");
+        Console.WriteLine($"{Name} the Orc (Lvl {Level}, Rage {Rage})");
     }
+
+    public void Hunt()
+    {
+        _huntCount++;
+        Console.WriteLine($"{Name} hunts...");
+
+        if (_huntCount % 2 == 0 && _rage < 10)
+            _rage++;
+    }
+
+    public override int Power => 7 * Level + 3 * Rage;
 }
