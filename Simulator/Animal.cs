@@ -20,5 +20,13 @@ public class Animals
 
     public uint Size { get; set; } = 3;
 
-    public string Info => $"{Description} <{Size}>";
+    public virtual string Info => $"{Description} <{Size}>";
+
+
+    // ostatni commit
+    public override string ToString()
+    {
+        string typeName = GetType().Name.ToUpper(); 
+        return $"{typeName}: {Info}";
+    }
 }

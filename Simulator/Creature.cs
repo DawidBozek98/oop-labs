@@ -37,7 +37,7 @@ public abstract class Creature
             _level++;
     }
 
-    public string Info => $"{Name} <{Level}>";
+    public abstract string Info { get; }
 
     public abstract void SayHi();
     public abstract int Power { get; }
@@ -56,5 +56,11 @@ public abstract class Creature
     {
         Direction[] parsed = DirectionParser.Parse(input);
         Go(parsed);
+    }
+
+    public override string ToString()
+    {
+        string typeName = GetType().Name.ToUpper(); 
+        return $"{typeName}: {Info}";
     }
 }

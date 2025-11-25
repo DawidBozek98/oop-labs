@@ -37,4 +37,7 @@ public class Elf : Creature
     }
 
     public override int Power => 8 * Level + 2 * Agility;
+
+    // ovverride z ostatniego commita
+    public override string Info => $"{Name} [{Level}][{Agility}]";
 }

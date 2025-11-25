@@ -37,4 +37,7 @@ public class Orc : Creature
     }
 
     public override int Power => 7 * Level + 3 * Rage;
+
+    // ovverride z tostring()
+    public override string Info => $"{Name} [{Level}][{Rage}]";
 }
