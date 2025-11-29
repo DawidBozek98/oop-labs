@@ -22,15 +22,15 @@ public class Elf : Creature
         Agility = agility;
     }
 
-    public override void SayHi()
+    public override string Greeting()
     {
-        Console.WriteLine($"{Name} the Elf (Lvl {Level}, Agility {Agility})");
+        return $"{Name} the Elf (Lvl {Level}, Agility {Agility})";
     }
 
     public void Sing()
     {
         _singCount++;
-        Console.WriteLine($"{Name} sings...");
+        
 
         if (_singCount % 3 == 0 && _agility < 10)
             _agility++;

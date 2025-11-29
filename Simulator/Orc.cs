@@ -22,15 +22,15 @@ public class Orc : Creature
         Rage = rage;
     }
 
-    public override void SayHi()
+    public override string Greeting()
     {
-        Console.WriteLine($"{Name} the Orc (Lvl {Level}, Rage {Rage})");
+        return $"{Name} the Orc (Lvl {Level}, Rage {Rage})";
     }
 
     public void Hunt()
     {
         _huntCount++;
-        Console.WriteLine($"{Name} hunts...");
+       
 
         if (_huntCount % 2 == 0 && _rage < 10)
             _rage++;
