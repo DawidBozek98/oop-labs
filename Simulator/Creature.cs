@@ -1,9 +1,14 @@
 ﻿namespace Simulator;
 
+using System;
+using Simulator.Maps;
+
 public abstract class Creature
 {
     private string _name = "Unknown";
     private int _level = 1;
+    private Map? map;
+    private Point point;
 
     public string Name
     {
@@ -23,7 +28,11 @@ public abstract class Creature
         }
     }
 
-    public Creature() { }
+    public Point Position => point;
+
+    public Creature()
+    {
+    }
 
     public Creature(string name, int level = 1)
     {
@@ -40,31 +49,44 @@ public abstract class Creature
     public abstract string Info { get; }
 
     public abstract string Greeting();
+
     public abstract int Power { get; }
 
-   public string Go(Direction direction) => $"{direction.ToString().ToLower()}";
-
-    public string Go(Direction[] directions)
+    public void InitMapAndPosition(Map map, Point startingPosition)
     {
+        if (map == null)
+            throw new ArgumentNullException(nameof(map));
+        if (!map.Exist(startingPosition))
+            throw new ArgumentOutOfRangeException(nameof(startingPosition));
+        if (this.map != null)
+            throw new InvalidOperationException("Creature is already placed on a map.");
 
-       var result = new string[directions.Length];
-        for (int i = 0; i < directions.Length; i++)
-        {
-            result[i] = Go(directions[i]);
-        }
-        return string.Join(", ", result);
-
+        this.map = map;
+        point = startingPosition;
+        map.Add(this, startingPosition);
     }
 
-    public void Go(string input)
+    public string Go(Direction direction)
     {
-        Direction[] parsed = DirectionParser.Parse(input);
-        Go(parsed);
+        if (map == null)
+            return direction.ToString().ToLower();
+
+        var nextPoint = map.Next(point, direction);
+        try
+        {
+            map?.Move(this, nextPoint);
+        } catch (Exception)
+        {
+            throw;
+        }
+        point = nextPoint;
+
+        return direction.ToString().ToLower();
     }
 
     public override string ToString()
     {
-        string typeName = GetType().Name.ToUpper(); 
+        string typeName = GetType().Name.ToUpper();
         return $"{typeName}: {Info}";
     }
 }

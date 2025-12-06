@@ -1,31 +1,89 @@
 ﻿namespace Simulator.Maps;
 
+using System;
+using System.Collections.Generic;
+
 /// <summary>
-/// Map of points.
+/// Base class for all rectangular maps used in the simulator.
+/// Stores the size, boundaries and provides the API for movement
+/// and creature placement.
 /// </summary>
 public abstract class Map
+    
 {
-    /// <summary>
-    /// Check if given point belongs to the map.
-    /// </summary>
-    /// <param name="p">Point to check.</param>
-    /// <returns></returns>
-    public abstract bool Exist(Point p);
+    private Dictionary<Point, List<Creature>> _points;
+
+  
 
     /// <summary>
-    /// Next position to the point in a given direction.
+    /// Width of the map (X dimension).
     /// </summary>
-    /// <param name="p">Starting point.</param>
-    /// <param name="d">Direction.</param>
-    /// <returns>Next point.</returns>
+    public int SizeX { get; }
+
+    /// <summary>
+    /// Height of the map (Y dimension).
+    /// </summary>
+    public int SizeY { get; }
+
+    /// <summary>
+    /// Rectangle representing valid coordinates from (0,0) to (SizeX - 1, SizeY - 1).
+    /// </summary>
+    protected Rectangle Bounds { get; }
+
+    protected Map(int sizeX, int sizeY)
+    {
+        if (sizeX < 5)
+            throw new ArgumentOutOfRangeException(nameof(sizeX));
+        if (sizeY < 5)
+            throw new ArgumentOutOfRangeException(nameof(sizeY));
+
+        SizeX = sizeX;
+        SizeY = sizeY;
+        Bounds = new Rectangle(0, 0, sizeX - 1, sizeY - 1);
+    }
+
+    /// <summary>
+    /// Checks whether a given point exists within the boundaries of the map.
+    /// </summary>
+    public virtual bool Exist(Point p) => Bounds.Contains(p);
+
+    /// <summary>
+    /// Computes the next point in the given direction according to map rules.
+    /// </summary>
     public abstract Point Next(Point p, Direction d);
 
     /// <summary>
-    /// Next diagonal position to the point in a given direction
-    /// rotated 45 degrees clockwise.
+    /// Computes the diagonal next point (45° rotated direction).
     /// </summary>
-    /// <param name="p">Starting point.</param>
-    /// <param name="d">Direction.</param>
-    /// <returns>Next point.</returns>
     public abstract Point NextDiagonal(Point p, Direction d);
+
+    /// <summary>
+    /// Adds a creature to the map at a given point.
+    /// The map must store this creature and track its position.
+    /// </summary>
+    public abstract void Add(Creature creature, Point p);
+
+    /// <summary>
+    /// Removes a creature from its current position on the map.
+    /// </summary>
+    public abstract void Remove(Creature creature);
+
+    /// <summary>
+    /// Moves a creature from its old point to a new one.
+    /// </summary>
+    public void Move(Creature creature, Point p)
+    {
+        Remove(creature);
+        Add(creature, p);
+    }
+
+    /// <summary>
+    /// Returns the list of creatures standing at a given point.
+    /// </summary>
+    public abstract List<Creature> At(Point p);
+
+    /// <summary>
+    /// Returns the list of creatures standing at coordinates (x, y).
+    /// </summary>
+    public List<Creature>? At(int x, int y) => At(new Point(x, y));
 }

@@ -55,7 +55,6 @@ public class DirectionParserTests
         Direction[] expected)
     {
         // Arrange
-        // use [Theory] [InlineData] to check multiple sets of data
         // Act
         var result = DirectionParser.Parse(s);
         // Assert
