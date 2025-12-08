@@ -40,4 +40,7 @@ public class Elf : Creature
 
     // ovverride z ostatniego commita
     public override string Info => $"{Name} [{Level}][{Agility}]";
+    public override char Symbol => 'E';
+
+
 }

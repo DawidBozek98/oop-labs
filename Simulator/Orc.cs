@@ -40,4 +40,7 @@ public class Orc : Creature
 
     // ovverride z tostring()
     public override string Info => $"{Name} [{Level}][{Rage}]";
+    public override char Symbol => 'O';
+
+
 }

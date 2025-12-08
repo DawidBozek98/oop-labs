@@ -89,4 +89,6 @@ public abstract class Creature
         string typeName = GetType().Name.ToUpper();
         return $"{typeName}: {Info}";
     }
+    public virtual char Symbol => '?';
+    
 }
