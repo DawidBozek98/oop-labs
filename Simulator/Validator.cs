@@ -22,7 +22,7 @@ public static class Validator
         if (value.Length > max)
             value = value.Substring(0, max).TrimEnd();
 
-        if (value.Length > 0 && char.IsLower(value[0]))
+        if (value.Length > 0 && char.IsLetter(value[0]) && char.IsLower(value[0]))
             value = char.ToUpper(value[0]) + value.Substring(1);
 
         return value;
