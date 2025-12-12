@@ -3,7 +3,7 @@
 using System;
 using Simulator.Maps;
 
-public abstract class Creature
+public abstract class Creature : IMappable
 {
     private string _name = "Unknown";
     private int _level = 1;
@@ -47,10 +47,10 @@ public abstract class Creature
     }
 
     public abstract string Info { get; }
-
     public abstract string Greeting();
-
     public abstract int Power { get; }
+
+    public virtual char Symbol => '?';
 
     public void InitMapAndPosition(Map map, Point startingPosition)
     {
@@ -66,22 +66,14 @@ public abstract class Creature
         map.Add(this, startingPosition);
     }
 
-    public string Go(Direction direction)
+    public void Go(Direction direction)
     {
         if (map == null)
-            return direction.ToString().ToLower();
+            return;
 
         var nextPoint = map.Next(point, direction);
-        try
-        {
-            map?.Move(this, nextPoint);
-        } catch (Exception)
-        {
-            throw;
-        }
+        map.Move(this, nextPoint);
         point = nextPoint;
-
-        return direction.ToString().ToLower();
     }
 
     public override string ToString()
@@ -89,6 +81,4 @@ public abstract class Creature
         string typeName = GetType().Name.ToUpper();
         return $"{typeName}: {Info}";
     }
-    public virtual char Symbol => '?';
-    
 }

@@ -9,11 +9,8 @@ using System.Collections.Generic;
 /// and creature placement.
 /// </summary>
 public abstract class Map
-    
 {
-    private Dictionary<Point, List<Creature>> _points;
-
-  
+    private Dictionary<Point, List<IMappable>> _points;
 
     /// <summary>
     /// Width of the map (X dimension).
@@ -61,17 +58,17 @@ public abstract class Map
     /// Adds a creature to the map at a given point.
     /// The map must store this creature and track its position.
     /// </summary>
-    public abstract void Add(Creature creature, Point p);
+    public abstract void Add(IMappable creature, Point p);
 
     /// <summary>
     /// Removes a creature from its current position on the map.
     /// </summary>
-    public abstract void Remove(Creature creature);
+    public abstract void Remove(IMappable creature);
 
     /// <summary>
     /// Moves a creature from its old point to a new one.
     /// </summary>
-    public void Move(Creature creature, Point p)
+    public void Move(IMappable creature, Point p)
     {
         Remove(creature);
         Add(creature, p);
@@ -80,10 +77,10 @@ public abstract class Map
     /// <summary>
     /// Returns the list of creatures standing at a given point.
     /// </summary>
-    public abstract List<Creature> At(Point p);
+    public abstract List<IMappable> At(Point p);
 
     /// <summary>
     /// Returns the list of creatures standing at coordinates (x, y).
     /// </summary>
-    public List<Creature>? At(int x, int y) => At(new Point(x, y));
+    public List<IMappable>? At(int x, int y) => At(new Point(x, y));
 }

@@ -9,8 +9,8 @@ using System.Collections.Generic;
 /// </summary>
 public class SmallTorusMap : Map
 {
-    private readonly Dictionary<Point, List<Creature>> _creatures = new();
-    private readonly Dictionary<Creature, Point> _positions = new();
+    private readonly Dictionary<Point, List<IMappable>> _creatures = new();
+    private readonly Dictionary<IMappable, Point> _positions = new();
 
     public int Size => SizeX;
 
@@ -22,79 +22,54 @@ public class SmallTorusMap : Map
     }
 
     /// <summary>
-    /// Computes wrapped straight movement (torus behavior).
+    /// Computes next point with wrap-around.
     /// </summary>
     public override Point Next(Point p, Direction d)
     {
-        int x = p.X;
-        int y = p.Y;
+        var next = p.Next(d);
 
-        switch (d)
-        {
-            case Direction.Up:
-                y++;
-                break;
-            case Direction.Right:
-                x++;
-                break;
-            case Direction.Down:
-                y--;
-                break;
-            case Direction.Left:
-                x--;
-                break;
-            default:
-                return p;
-        }
+        int x = next.X;
+        int y = next.Y;
 
-        x = (x + SizeX) % SizeX;
-        y = (y + SizeY) % SizeY;
+        if (x < 0) x = SizeX - 1;
+        else if (x >= SizeX) x = 0;
+
+        if (y < 0) y = SizeY - 1;
+        else if (y >= SizeY) y = 0;
 
         return new Point(x, y);
     }
 
     /// <summary>
-    /// Computes wrapped diagonal movement (torus behavior).
+    /// Computes next diagonal point with wrap-around.
     /// </summary>
     public override Point NextDiagonal(Point p, Direction d)
     {
-        int dx, dy;
+        var next = p.NextDiagonal(d);
 
-        switch (d)
-        {
-            case Direction.Up:
-                dx = 1; dy = 1;
-                break;
-            case Direction.Right:
-                dx = 1; dy = -1;
-                break;
-            case Direction.Down:
-                dx = -1; dy = -1;
-                break;
-            case Direction.Left:
-                dx = -1; dy = 1;
-                break;
-            default:
-                return p;
-        }
+        int x = next.X;
+        int y = next.Y;
 
-        int x = (p.X + dx + SizeX) % SizeX;
-        int y = (p.Y + dy + SizeY) % SizeY;
+        if (x < 0) x = SizeX - 1;
+        else if (x >= SizeX) x = 0;
+
+        if (y < 0) y = SizeY - 1;
+        else if (y >= SizeY) y = 0;
 
         return new Point(x, y);
     }
 
     /// <summary>
-    /// Adds a creature to the torus map at the given point.
+    /// Adds a creature at a given point.
     /// </summary>
-    public override void Add(Creature creature, Point p)
+    public override void Add(IMappable creature, Point p)
     {
         if (!Exist(p))
             throw new ArgumentOutOfRangeException(nameof(p));
 
         if (!_creatures.TryGetValue(p, out var list))
         {
-            list = new List<Creature>();
+            list = new List<IMappable>();
             _creatures[p] = list;
         }
 
@@ -105,9 +80,9 @@ public class SmallTorusMap : Map
     }
 
     /// <summary>
-    /// Removes a creature from its stored position.
+    /// Removes a creature from its current point.
     /// </summary>
-    public override void Remove(Creature creature)
+    public override void Remove(IMappable creature)
     {
         if (!_positions.TryGetValue(creature, out var point))
             return;
@@ -125,11 +100,11 @@ public class SmallTorusMap : Map
     /// <summary>
     /// Returns all creatures present at the given point.
     /// </summary>
-    public override List<Creature> At(Point p)
+    public override List<IMappable> At(Point p)
     {
         if (_creatures.TryGetValue(p, out var list))
-            return new List<Creature>(list);
+            return new List<IMappable>(list);
 
-        return new List<Creature>();
+        return new List<IMappable>();
     }
 }

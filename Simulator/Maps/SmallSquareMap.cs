@@ -9,8 +9,8 @@ using System.Collections.Generic;
 /// </summary>
 public class SmallSquareMap : Map
 {
-    private readonly Dictionary<Point, List<Creature>> _creatures = new();
-    private readonly Dictionary<Creature, Point> _positions = new();
+    private readonly Dictionary<Point, List<IMappable>> _creatures = new();
+    private readonly Dictionary<IMappable, Point> _positions = new();
 
     public int Size => SizeX;
 
@@ -45,14 +45,14 @@ public class SmallSquareMap : Map
     /// Adds a creature to the map at the given point.
     /// Stores it in the internal structure.
     /// </summary>
-    public override void Add(Creature creature, Point p)
+    public override void Add(IMappable creature, Point p)
     {
         if (!Exist(p))
             throw new ArgumentOutOfRangeException(nameof(p));
 
         if (!_creatures.TryGetValue(p, out var list))
         {
-            list = new List<Creature>();
+            list = new List<IMappable>();
             _creatures[p] = list;
         }
 
@@ -65,7 +65,7 @@ public class SmallSquareMap : Map
     /// <summary>
     /// Removes a creature from its current point on the map.
     /// </summary>
-    public override void Remove(Creature creature)
+    public override void Remove(IMappable creature)
     {
         if (!_positions.TryGetValue(creature, out var point))
             return;
@@ -83,11 +83,11 @@ public class SmallSquareMap : Map
     /// <summary>
     /// Returns all creatures positioned at the given point.
     /// </summary>
-    public override List<Creature> At(Point p)
+    public override List<IMappable> At(Point p)
     {
         if (_creatures.TryGetValue(p, out var list))
-            return new List<Creature>(list);
+            return new List<IMappable>(list);
 
-        return new List<Creature>();
+        return new List<IMappable>();
     }
 }

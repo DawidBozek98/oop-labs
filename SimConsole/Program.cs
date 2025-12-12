@@ -2,6 +2,7 @@
 using Simulator;
 using Simulator.Maps;
 
+
 namespace SimConsole;
 
 internal class Program
@@ -12,7 +13,7 @@ internal class Program
 
         // dane z zadanaia
         SmallSquareMap map = new(5);
-        List<Creature> creatures =
+        List<IMappable> creatures =
         [
             new Orc("Gorbag"),
             new Elf("Elandor")
