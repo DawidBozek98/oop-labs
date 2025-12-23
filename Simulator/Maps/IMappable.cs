@@ -10,4 +10,6 @@ public interface IMappable
 
     void InitMapAndPosition(Map map, Point startingPosition);
     void Go(Direction direction);
+
+    string ToString();
 }

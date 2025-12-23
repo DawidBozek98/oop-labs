@@ -5,25 +5,33 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Torus map (wrap-around). Moving past edges causes wrapping to opposite side.
-/// Allows multiple creatures per position.
+/// Allows multiple objects per position.
 /// </summary>
 public class SmallTorusMap : Map
 {
     private readonly Dictionary<Point, List<IMappable>> _creatures = new();
     private readonly Dictionary<IMappable, Point> _positions = new();
 
-    public int Size => SizeX;
-
+    /// <summary>
+    /// Convenience ctor for square torus maps.
+    /// </summary>
     public SmallTorusMap(int size)
-        : base(size, size)
+        : this(size, size)
     {
-        if (size > 20)
-            throw new ArgumentOutOfRangeException(nameof(size));
     }
 
     /// <summary>
-    /// Computes next point with wrap-around.
+    /// Rectangular torus map (wrap-around).
     /// </summary>
+    public SmallTorusMap(int sizeX, int sizeY)
+        : base(sizeX, sizeY)
+    {
+        if (sizeX > 20)
+            throw new ArgumentOutOfRangeException(nameof(sizeX));
+        if (sizeY > 20)
+            throw new ArgumentOutOfRangeException(nameof(sizeY));
+    }
+
     public override Point Next(Point p, Direction d)
     {
         var next = p.Next(d);
@@ -40,9 +48,6 @@ public class SmallTorusMap : Map
         return new Point(x, y);
     }
 
-    /// <summary>
-    /// Computes next diagonal point with wrap-around.
-    /// </summary>
     public override Point NextDiagonal(Point p, Direction d)
     {
         var next = p.NextDiagonal(d);
@@ -59,9 +64,6 @@ public class SmallTorusMap : Map
         return new Point(x, y);
     }
 
-    /// <summary>
-    /// Adds a creature at a given point.
-    /// </summary>
     public override void Add(IMappable creature, Point p)
     {
         if (!Exist(p))
@@ -79,9 +81,6 @@ public class SmallTorusMap : Map
         _positions[creature] = p;
     }
 
-    /// <summary>
-    /// Removes a creature from its current point.
-    /// </summary>
     public override void Remove(IMappable creature)
     {
         if (!_positions.TryGetValue(creature, out var point))
@@ -97,9 +96,6 @@ public class SmallTorusMap : Map
         _positions.Remove(creature);
     }
 
-    /// <summary>
-    /// Returns all creatures present at the given point.
-    /// </summary>
     public override List<IMappable> At(Point p)
     {
         if (_creatures.TryGetValue(p, out var list))
