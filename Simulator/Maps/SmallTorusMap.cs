@@ -5,30 +5,30 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Torus map (wrap-around). Moving past edges causes wrapping to opposite side.
-/// Allows multiple objects per position.
+/// Allows multiple creatures per position.
 /// </summary>
 public class SmallTorusMap : Map
 {
     private readonly Dictionary<Point, List<IMappable>> _creatures = new();
     private readonly Dictionary<IMappable, Point> _positions = new();
 
-    /// <summary>
-    /// Convenience ctor for square torus maps.
-    /// </summary>
+    public int Size => SizeX;
+
     public SmallTorusMap(int size)
         : this(size, size)
     {
     }
 
-    /// <summary>
-    /// Rectangular torus map (wrap-around).
-    /// </summary>
     public SmallTorusMap(int sizeX, int sizeY)
         : base(sizeX, sizeY)
     {
         if (sizeX > 20)
             throw new ArgumentOutOfRangeException(nameof(sizeX));
         if (sizeY > 20)
+            throw new ArgumentOutOfRangeException(nameof(sizeY));
+        if (sizeX <= 0)
+            throw new ArgumentOutOfRangeException(nameof(sizeX));
+        if (sizeY <= 0)
             throw new ArgumentOutOfRangeException(nameof(sizeY));
     }
 
