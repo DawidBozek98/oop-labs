@@ -11,7 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestSimulator", "TestSimula
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimConsole", "SimConsole\SimConsole.csproj", "{0B05B946-9CAE-4AEF-B947-63DC4DB9440D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorPages", "RazorPages\RazorPages.csproj", "{B092A21C-59C4-4217-BC4C-B524056CA570}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimWeb", "SimWeb\SimWeb.csproj", "{BC77F398-3979-4DB2-9068-07ADA2CEBF4E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0B05B946-9CAE-4AEF-B947-63DC4DB9440D} = {0B05B946-9CAE-4AEF-B947-63DC4DB9440D}
+		{1DA65907-BC64-4145-874B-D04688C39DEA} = {1DA65907-BC64-4145-874B-D04688C39DEA}
+		{3B4A3EBA-4443-416D-BF39-FDA5657F916F} = {3B4A3EBA-4443-416D-BF39-FDA5657F916F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +40,10 @@ Global
 		{0B05B946-9CAE-4AEF-B947-63DC4DB9440D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B05B946-9CAE-4AEF-B947-63DC4DB9440D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B05B946-9CAE-4AEF-B947-63DC4DB9440D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B092A21C-59C4-4217-BC4C-B524056CA570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B092A21C-59C4-4217-BC4C-B524056CA570}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B092A21C-59C4-4217-BC4C-B524056CA570}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B092A21C-59C4-4217-BC4C-B524056CA570}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC77F398-3979-4DB2-9068-07ADA2CEBF4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC77F398-3979-4DB2-9068-07ADA2CEBF4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC77F398-3979-4DB2-9068-07ADA2CEBF4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC77F398-3979-4DB2-9068-07ADA2CEBF4E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

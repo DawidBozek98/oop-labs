@@ -1,0 +1,54 @@
+﻿@page
+@model SimulationModel
+@{
+    ViewData["Title"] = "Symulacja";
+}
+
+<div class="sim-top">
+    <a class="arrow @(Model.TurnIndex <= 0 ? "disabled" : "")"
+       asp-page="/Simulation"
+       asp-route-turn="@(Model.TurnIndex - 1)">←</a>
+
+    <div class="turn">Tura @Model.TurnIndex</div>
+
+    <a class="arrow @(Model.TurnIndex >= Model.MaxTurn ? "disabled" : "")"
+       asp-page="/Simulation"
+       asp-route-turn="@(Model.TurnIndex + 1)">→</a>
+</div>
+
+<div class="board-wrap">
+    <div class="ylabels">
+        @for (int y = Model.SizeY - 1; y >= 0; y--)
+        {
+            <div>@y</div>
+        }
+    </div>
+
+    <div class="board">
+        @for (int y = Model.SizeY - 1; y >= 0; y--)
+        {
+            for (int x = 0; x < Model.SizeX; x++)
+            {
+                var img = Model.GetImageFor(x, y);
+                <div class="cell">
+                    @if (img != null)
+                    {
+                        <img src="@img" alt="" />
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="xlabelrow">
+    <div></div>
+    <div class="xlabels">
+        @for (int x = 0; x < Model.SizeX; x++)
+        {
+            <div style="text-align:center">@x</div>
+        }
+    </div>
+</div>
+
+<div class="caption">@Model.Caption</div>
