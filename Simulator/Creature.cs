@@ -48,7 +48,8 @@ public abstract class Creature : IMappable
 
     public abstract string Info { get; }
     public abstract string Greeting();
-    public abstract int Power { get; }
+    public Func<int> CalculatePower { get; set; } = () => 0;
+    public int Power => CalculatePower();
 
     public virtual char Symbol => '?';
 

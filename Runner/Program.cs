@@ -1,4 +1,5 @@
 ﻿using Simulator;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Runner;
 
@@ -30,9 +31,34 @@ internal class Program
         new Birds { Description = "  eagles ", Size = 10 },
         new Elf("e", 15, -3),
         new Orc("morgash", 6, 4)
-    };
+        };
             Console.WriteLine("\nMy objects:");
             foreach (var o in myObjects) Console.WriteLine(o);
+
+        }
+
+        List<Creature> creatures =
+        [
+            new Elf("Elrond", 5, 7),
+                new Orc("Gorgul", 4, 6),
+                new Elf("Legolas", 6, 8),
+                new Orc("Thrall", 5, 7),
+                new Elf("Tauriel", 4, 5),
+                new Orc("Azog", 6, 9)
+        ];
+        creatures.Sort((x, y) => y.Power.CompareTo(x.Power));
+        creatures.ForEach(c => Console.WriteLine($"{c,-20} power: {c.Power}"));
+        creatures.Sort((x, y) => x.Name.CompareTo(y.Name));
+        Console.WriteLine("\nSorted by Name:"); 
+
+
+
+
+    }
+
+
+    
+}
 
 
 
@@ -112,7 +138,5 @@ internal class Program
                  a = new() { Description = "Mice           are great", Size = 40 };
                  Console.WriteLine(a.Info);
              } */
-        }
-    }
-}
+    
 

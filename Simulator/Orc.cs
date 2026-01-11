@@ -14,12 +14,16 @@ public class Orc : Creature
         }
     }
 
-    public Orc() { }
+    public Orc() {
+        CalculatePower = () => 7 * Level + 3 * Rage;
+     }
 
     public Orc(string name, int level = 1, int rage = 0)
         : base(name, level)
     {
         Rage = rage;
+        CalculatePower = () => 7 * Level + 3 * Rage;
+       
     }
 
     public override string Greeting()
@@ -36,7 +40,7 @@ public class Orc : Creature
             _rage++;
     }
 
-    public override int Power => 7 * Level + 3 * Rage;
+    //public abstract int Power => 7 * Level + 3 * Rage;
 
     // ovverride z tostring()
     public override string Info => $"{Name} [{Level}][{Rage}]";

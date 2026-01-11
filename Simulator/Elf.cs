@@ -14,12 +14,13 @@ public class Elf : Creature
         }
     }
 
-    public Elf() { }
+    public Elf() : this("Elf") { }
 
     public Elf(string name, int level = 1, int agility = 0)
         : base(name, level)
     {
         Agility = agility;
+        CalculatePower = () => 8 * Level + 2 * Agility;
     }
 
     public override string Greeting()
@@ -36,7 +37,6 @@ public class Elf : Creature
             _agility++;
     }
 
-    public override int Power => 8 * Level + 2 * Agility;
 
     // ovverride z ostatniego commita
     public override string Info => $"{Name} [{Level}][{Agility}]";
